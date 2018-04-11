@@ -6,7 +6,7 @@
     </insert>
 
     <update id="deletePost">
-        UPDATE post set state = 0 WHERE id = #{id}
+        UPDATE post set status = 0 WHERE id = #{id}
     </update>
 
     <select id="getUserIdByPostId" resultType="Long">
@@ -14,15 +14,15 @@
     </select>
 
     <select id="getArticleById" resultType="Post">
-        select * from post where state = 1 and id = #{id} or pid = #{id}
+        select * from post where status = 1 and id = #{id} or pid = #{id}
     </select>
 
     <select id="getCommentById" resultType="Post">
-        select a.*, b.name as userName from post a, user b where a.user_id = b.id and a.state = 1 and  find_in_set(a.id, getChildList(#{id}))
+        select a.*, b.name as userName from post a, user b where a.user_id = b.id and a.status = 1 and  find_in_set(a.id, getChildList(#{id}))
     </select>
 
     <select id="getArticleList"  resultType="blog.model.Post">
-        SELECT id, pid, TYPE, title, content, user_id AS userId, DATE_FORMAT(create_time, '%Y-%m-%d') AS createTime FROM post WHERE state = 1 AND TYPE = 0
+        SELECT id, pid, TYPE, title, content, user_id AS userId, DATE_FORMAT(create_time, '%Y-%m-%d') AS createTime FROM post WHERE status = 1 AND TYPE = 0
         <if test = "userId != null">
             AND user_id = #{userId}
         </if>

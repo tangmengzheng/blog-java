@@ -58,6 +58,7 @@ public class UserService {
         if(isNameUsed(name)) {
             return new CommonResult("用户名已被注册！");
         }
+        user.setPassword(encode(user.getPassword()));
         dao.createUser(user);
         return new CommonResult();
     }

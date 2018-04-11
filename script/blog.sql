@@ -7,6 +7,7 @@ create table user(
     id int auto_increment ,
     name varchar(128) unique  not null,
     password varchar(128) not null,
+    phone varchar(20),
     email varchar(128) not null,
     create_time timestamp default current_timestamp,
     primary key(id)
@@ -16,7 +17,7 @@ DROP TABLE IF EXISTS post;
 create table post(
     id int auto_increment,
     pid int default 0,
-    type int default 0 comment '0 ндубё╛ 1фюбш', 
+    type int default 0 comment '0 О©╫О©╫О©╫бёО©╫ 1О©╫О©╫О©╫О©╫', 
     title varchar(128) ,
     content text not null,
     user_id int not null,

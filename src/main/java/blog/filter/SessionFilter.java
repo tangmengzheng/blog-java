@@ -22,7 +22,7 @@ public class SessionFilter implements Filter {
 
         if (user == null) {
             String path = hrequest.getRequestURI();
-            if(!path.contains("/login") &&  !path.contains("/logout") && !path.contains("register")) {
+            if(!path.startsWith("/login") &&  !path.startsWith("/logout") && !path.startsWith("/register") && !path.startsWith("/public")) {
                 wrapper.sendRedirect("/login");
                 return;
             }

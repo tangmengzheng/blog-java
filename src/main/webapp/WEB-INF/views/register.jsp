@@ -6,7 +6,6 @@
         $("#sign").validate({
             rules: {
                 name: {
-                    number: true,
                     required: true
                 },
                 password: {
