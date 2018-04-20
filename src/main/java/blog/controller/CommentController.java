@@ -1,16 +1,12 @@
 package blog.controller;
 
 import blog.dto.CommonResult;
-import blog.model.Message;
 import blog.model.Post;
 import blog.service.CommentService;
-import blog.service.MessageService;
-import blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,8 +19,9 @@ import java.util.List;
 @Controller
 @RequestMapping(value="/comment")
 public class CommentController {
+
     @Autowired
-    private CommentService service;
+    private CommentService commentService;
 
     @ResponseBody
     @RequestMapping(value="/makeComment")
@@ -36,7 +33,7 @@ public class CommentController {
 
         post.setUserId(userId);
         post.setType(1);
-        if(!service.postComment(post)) {
+        if(!commentService.postComment(post)) {
             return new CommonResult("发表评论失败");
         }
 
@@ -46,7 +43,7 @@ public class CommentController {
     @RequestMapping(value="/deleteComment")
     @ResponseBody
     public CommonResult deleteComment(Long id) {
-        if(!service.deleteComment(id)) {
+        if(!commentService.deleteComment(id)) {
             return new CommonResult("删除评论失败");
         }
         return new CommonResult();
@@ -54,18 +51,10 @@ public class CommentController {
 
     @RequestMapping(value = "/getComment/{id}")
     public  String getComment(@PathVariable("id") Long id, Model model) {
-        List<Post> postList = service.getCommentById(id);
-        Post parent = null;
-        for(Post post : postList) {
-            if(post.getId().equals(id)) {
-                parent = post;
-                postList.remove(post);
-                break;
-            }
-        }
+        Post comment = commentService.getCommentById(id);
 
-        model.addAttribute("parent", parent);
-        model.addAttribute("children", postList);
+        model.addAttribute("parent", comment);
+        //model.addAttribute("children", postList);
         return "article";
     }
 

@@ -9,6 +9,7 @@ create table user(
     password varchar(128) not null,
     phone varchar(20),
     email varchar(128) not null,
+    status int default 0,
     create_time timestamp default current_timestamp,
     primary key(id)
 )ENGINE = InnoDB default charset = utf8;
@@ -17,11 +18,11 @@ DROP TABLE IF EXISTS post;
 create table post(
     id int auto_increment,
     pid int default 0,
-    type int default 0 comment '0 ���£� 1����', 
     title varchar(128) ,
     content text not null,
     user_id int not null,
-    status int default 0,
+    status int default 0 comment '失效 -1',
+    comment_count int DEFAULT  0,
     read_times int default 0,
     favour_times int default 0,
     update_time timestamp ,
@@ -48,7 +49,7 @@ create table message(
     commenter_id int,
     reminder_id int,
     message varchar(512),
-    has_read int ,
+    has_read int DEFAULT 0,
     create_time timestamp default current_timestamp,
     constraint post_id_fk foreign key(post_id) references post(id) on delete cascade,
     constraint commenter_id_fk foreign key(commenter_id) references user(id) ON DELETE CASCADE,

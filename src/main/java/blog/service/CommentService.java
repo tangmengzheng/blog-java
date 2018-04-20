@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -18,7 +17,7 @@ import java.util.List;
 public class CommentService {
 
     @Autowired
-    private PostDao dao;
+    private PostDao postDao;
 
     @Autowired
     private MessageService messageService;
@@ -27,19 +26,18 @@ public class CommentService {
     private PostService postService;
 
     public boolean postComment(Post post) {
-
         //生成消息
-        Message message = generateMessage(post);
+        Message message = this.generateMessage(post);
         messageService.createMessage(message);
-        return (dao.createPost(post)==1);
+        return (postDao.createPost(post)==1);
     }
 
     public boolean deleteComment(Long id) {
-        return (dao.deletePost(id) == 1);
+        return (postDao.deletePost(id) == 1);
     }
 
-    public List<Post> getCommentById(Long id) {
-        return dao.getCommentById(id);
+    public Post getCommentById(Long id) {
+        return postDao.getPostById(id);
     }
 
     /**

@@ -3,7 +3,7 @@
 <mapper namespace="blog.dao.UserDao">
 
     <select id="getUserByName" parameterType="String" resultType="blog.model.User">
-        select * from user where name = #{name}
+        select * from user where name = #{name} and status = 0
     </select>
 
     <insert id="createUser" parameterType="blog.model.User" >
@@ -11,7 +11,7 @@
     </insert>
 
     <select id="nameUsedTimes" resultType="int">
-        select count(*) from user where name = #{name}
+        select count(*) from user where name = #{name} and status = 0
     </select>
 
 </mapper>

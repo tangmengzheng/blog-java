@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping(value="/article")
 public class ArticleController {
     @Autowired
-    ArticleService service;
+    ArticleService articleService;
 
     @Autowired
     PostService postService;
@@ -32,7 +32,6 @@ public class ArticleController {
     @RequestMapping(value="/postArticle")
     public String postArticle(Post article, HttpSession session) {
         article.setUserId((Long)session.getAttribute("userId"));
-        article.setType(0);
         article.setPid(0L);
 
         postService.createPost(article);
@@ -41,18 +40,18 @@ public class ArticleController {
 
     @RequestMapping(value="/getArticle/{id}")
     public String getArticleById(@PathVariable Long id, Model model) {
-        List<Post> postList = service.getArticleById(id);
-        Post article = null;
-        for(Post post : postList) {
-            if(post.getId().equals(id)) {
-                //将blog与评论分开
-                article = post;
-                postList.remove(post);
-                break;
-            }
-        }
+        //List<Post> postList = articleService.getArticleById(id);
+//        for(Post post : postList) {
+//            if(post.getId().equals(id)) {
+//                //将blog与评论分开
+//                article = post;
+//                postList.remove(post);
+//                break;
+//            }
+//        }
+        Post article = articleService.getArticleById(id);
         model.addAttribute("parent", article);
-        model.addAttribute("children", postList);
+        //model.addAttribute("children", postList);
         return "article";
     }
 

@@ -11,13 +11,19 @@ import java.io.Serializable;
 
 public class CommonResult implements Serializable {
 
+    /**
+     * 是否成功
+     **/
+    private boolean success;
 
-	private static final long serialVersionUID = -4185151304730685014L;
-
-	private boolean success;
-
+    /**
+     * 返回结果
+     **/
     private Object data;
 
+    /**
+     * 错误信息
+     **/
     private String errMsg;
 
     public CommonResult() {
@@ -27,6 +33,10 @@ public class CommonResult implements Serializable {
     public CommonResult(String errMsg) {
         this.success = false;
         this.errMsg = errMsg;
+    }
+
+    public CommonResult(Object obj) {
+        this.data = data;
     }
 
     public boolean isSuccess() {
@@ -54,8 +64,8 @@ public class CommonResult implements Serializable {
     }
 
     @Override
-	public String toString() {
-		return "CommonResult [success=" + success + ", data=" + data;
-	}
+    public String toString() {
+        return "CommonResult [success=" + success + ", data=" + data;
+    }
 
 }

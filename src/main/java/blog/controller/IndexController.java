@@ -1,6 +1,5 @@
 package blog.controller;
 
-import blog.dto.CommonResult;
 import blog.model.Message;
 import blog.model.Post;
 import blog.service.ArticleService;
@@ -20,7 +19,7 @@ import java.util.List;
 @Controller
 public class IndexController {
     @Autowired
-    private ArticleService service;
+    private ArticleService articleService;
 
     @Autowired
     private MessageService messageService;
@@ -28,7 +27,7 @@ public class IndexController {
     @RequestMapping(value="/index", method = RequestMethod.GET)
     public String index(Model model, HttpSession session) {
         Long userId = (Long)session.getAttribute("userId");
-        List<Post> articleList = service.getArticleListByUserId(userId);
+        List<Post> articleList = articleService.getArticleListByUserId(userId);
         List<Message> messages = messageService.getNoReadedMessage(userId);
         model.addAttribute("messages", messages);
         model.addAttribute("articleList", articleList);

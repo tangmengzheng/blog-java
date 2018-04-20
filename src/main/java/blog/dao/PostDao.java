@@ -11,15 +11,16 @@ import java.util.Map;
  * Created by tangmengzheng on 2016/12/19.
  */
 public interface PostDao {
-    public int createPost(Post post);
+    int createPost(Post post);
 
-    public List<Post> getArticleList(@Param(value="userId") Long userId);
+    List<Post> getArticles(@Param(value="userId") Long userId);
 
-    public int deletePost(Long id);
+    int deletePost(Long id);
 
-    public Long getUserIdByPostId(Long postId);
+    Long getUserIdByPostId(Long postId);
 
-    public List<Post> getCommentById(Long id);
+    Post getPostById(Long id);
 
-    public List<Post> getArticleById(Long id);
+
+    List<Post> getPostByPid(Long pid);
 }

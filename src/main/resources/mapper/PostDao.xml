@@ -2,27 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="blog.dao.PostDao">
     <insert id="createPost" parameterType="blog.model.Post" useGeneratedKeys = "true" keyProperty = "id">
-        INSERT INTO post(pid, title, content, type, user_id, create_time) VALUES (#{pid}, #{title}, #{content},#{type}, #{userId}, null )
+        INSERT INTO post(pid, title, content, user_id, create_time) VALUES (#{pid}, #{title}, #{content}, #{userId}, null )
     </insert>
 
     <update id="deletePost">
-        UPDATE post set status = 0 WHERE id = #{id}
+        UPDATE post set status = -1 WHERE id = #{id}
     </update>
 
     <select id="getUserIdByPostId" resultType="Long">
         select user_id from post where id = #{postId}
     </select>
 
-    <select id="getArticleById" resultType="Post">
-        select * from post where status = 1 and id = #{id} or pid = #{id}
+    <select id="getPostById" resultType="Post">
+        select * from post where status = 1 id = #{id}
     </select>
 
-    <select id="getCommentById" resultType="Post">
-        select a.*, b.name as userName from post a, user b where a.user_id = b.id and a.status = 1 and  find_in_set(a.id, getChildList(#{id}))
+    <select id="getPostByPid" resultType="Post">
+        select * from post where pid = #{pid}
     </select>
 
-    <select id="getArticleList"  resultType="blog.model.Post">
-        SELECT id, pid, TYPE, title, content, user_id AS userId, DATE_FORMAT(create_time, '%Y-%m-%d') AS createTime FROM post WHERE status = 1 AND TYPE = 0
+    <select id="getArticles"  resultType="blog.model.Post">
+        SELECT id, pid, TYPE, title, content, user_id AS userId, DATE_FORMAT(create_time, '%Y-%m-%d') AS createTime FROM post WHERE status = 0
         <if test = "userId != null">
             AND user_id = #{userId}
         </if>
