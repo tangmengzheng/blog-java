@@ -14,17 +14,18 @@
     </select>
 
     <select id="getPostById" resultType="Post">
-        select * from post where status = 1 id = #{id}
-    </select>
-
-    <select id="getPostByPid" resultType="Post">
-        select * from post where pid = #{pid}
+        select id, pid, title, content, user_id AS userId, DATE_FORMAT(create_time, '%Y-%m-%d') AS createTime, read_count as readCount, favour_count as favourCount from post where status = 0 and id = #{id}
     </select>
 
     <select id="getArticles"  resultType="blog.model.Post">
-        SELECT id, pid, TYPE, title, content, user_id AS userId, DATE_FORMAT(create_time, '%Y-%m-%d') AS createTime FROM post WHERE status = 0
+        SELECT id, pid, title, content, user_id AS userId, DATE_FORMAT(create_time, '%Y-%m-%d') AS createTime FROM post
+        WHERE status = 0 and pid = 0
         <if test = "userId != null">
             AND user_id = #{userId}
         </if>
+    </select>
+
+    <select id="getByPid" resultType="blog.model.Post">
+        select id, pid, title, content, user_id AS userId, DATE_FORMAT(create_time, '%Y-%m-%d') AS createTime from post where pid = #{pid} and status = 0
     </select>
 </mapper>

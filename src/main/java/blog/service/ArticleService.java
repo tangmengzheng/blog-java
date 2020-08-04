@@ -21,6 +21,10 @@ public class ArticleService {
         return postDao.getArticles(userId);
     }
 
+    public List<Post> getComments(Long pid) {
+        return postDao.getByPid(pid);
+    }
+
     public Post getArticleById(Long id) {
         return postDao.getPostById(id);
     }

@@ -15,12 +15,12 @@ public interface PostDao {
 
     List<Post> getArticles(@Param(value="userId") Long userId);
 
+    List<Post> getByPid(Long pid);
+
     int deletePost(Long id);
 
     Long getUserIdByPostId(Long postId);
 
     Post getPostById(Long id);
 
-
-    List<Post> getPostByPid(Long pid);
 }

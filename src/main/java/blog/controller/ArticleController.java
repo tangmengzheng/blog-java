@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -40,19 +41,11 @@ public class ArticleController {
 
     @RequestMapping(value="/getArticle/{id}")
     public String getArticleById(@PathVariable Long id, Model model) {
-        //List<Post> postList = articleService.getArticleById(id);
-//        for(Post post : postList) {
-//            if(post.getId().equals(id)) {
-//                //将blog与评论分开
-//                article = post;
-//                postList.remove(post);
-//                break;
-//            }
-//        }
         Post article = articleService.getArticleById(id);
+        List<Post> comments = articleService.getComments(id);
         model.addAttribute("parent", article);
-        //model.addAttribute("children", postList);
-        return "article";
+        model.addAttribute("children", comments);
+        return  "article";
     }
 
 }
